@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement
 import javax.xml.bind.annotation.XmlRootElement
 
 @XmlRootElement(name = "item")
-data class PostIndex constructor(
+data class PostIndex (
         @set:XmlElement(name = "post_no")
         var postNo: Int = 0
 )
