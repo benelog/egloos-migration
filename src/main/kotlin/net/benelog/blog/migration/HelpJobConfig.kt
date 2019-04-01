@@ -17,7 +17,7 @@ class HelpJobConfig(
 ) {
     @Bean
     fun helpJob(): Job {
-        return jobFactory.get("helpJob")
+        return jobFactory.get("help")
                 .incrementer(RunIdIncrementer())
                 .start(printStep())
                 .build()
@@ -29,7 +29,7 @@ class HelpJobConfig(
                 .tasklet({ cont, context ->
                     println()
                     println("## 안내")
-                    println("실행하려는 Job은 `-Dspring.batch.job.names=helpJob`와 같이 VM option으로 지정한다")
+                    println("실행하려는 Job은 `-Dspring.batch.job.names=help`와 같이 VM option으로 지정한다")
                     println()
                     RepeatStatus.FINISHED
                 })
