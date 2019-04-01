@@ -5,6 +5,8 @@ import org.springframework.batch.item.ItemWriter
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
 import org.springframework.core.io.WritableResource
+import java.io.File
+import javax.annotation.PostConstruct
 
 class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
     companion object {
@@ -25,5 +27,14 @@ class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
             }
         }
         log.info("copy ${source} to ${destination}")
+    }
+
+    @PostConstruct
+    public fun initDirectory() {
+        val dir = File(destDir)
+        if(dir.exists() && dir.isDirectory) {
+            return
+        }
+        dir.mkdirs();
     }
 }
