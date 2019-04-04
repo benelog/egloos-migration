@@ -9,19 +9,18 @@ class HtmlToAsciiDocConverter {
     private val command = "pandoc --wrap=none -f html -t asciidoc".split(" ")
 
     fun convert(html: String): String {
-        val process = ProcessBuilder(command).run {
+        ProcessBuilder(command).run {
             redirectErrorStream(true)
             return@run start();
-        }
-
-        process.outputStream.run {
-            write(html.toByteArray())
-            close()
-        }
-
-        process.waitFor()
-        return process.inputStream.bufferedReader().use {
-            it.readText();
+        }.run {
+            outputStream.apply {
+                write(html.toByteArray())
+                close()
+            }
+            waitFor()
+            return inputStream.bufferedReader().use {
+                it.readText();
+            }
         }
     }
 }
