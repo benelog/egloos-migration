@@ -19,7 +19,7 @@ class MultiFilePostReaderTest {
                 ClassPathResource("detail/3134907.xml")
         )
 
-        val reader = ConvertToAsciidocJobConfig().multiFilePostReader(xmlFiles)
+        val reader = MultiFilePostReaderBuilder().multiFilePostReader(xmlFiles)
 
         reader.open(ExecutionContext())
 
