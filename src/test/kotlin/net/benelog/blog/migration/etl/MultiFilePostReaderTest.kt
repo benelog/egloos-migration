@@ -8,7 +8,7 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 import java.time.format.DateTimeFormatter
 
-class PostMultiFileReaderTest {
+class MultiFilePostReaderTest {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
     @Test
@@ -19,7 +19,7 @@ class PostMultiFileReaderTest {
                 ClassPathResource("detail/3134907.xml")
         )
 
-        val reader = ConvertToAsciidocJobConfig().postMultiFileReader(xmlFiles)
+        val reader = ConvertToAsciidocJobConfig().multiFilePostReader(xmlFiles)
 
         reader.open(ExecutionContext())
 

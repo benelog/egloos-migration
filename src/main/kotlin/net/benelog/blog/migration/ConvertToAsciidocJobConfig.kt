@@ -11,9 +11,9 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller
 class ConvertToAsciidocJobConfig {
 
     @Bean
-    fun postMultiFileReader(xmlFiles: Array<Resource>): ItemStreamReader<Post> {
+    fun multiFilePostReader(xmlFiles: Array<Resource>): ItemStreamReader<Post> {
         return MultiResourceItemReaderBuilder<Post>()
-                .name("postMultiFileReader")
+                .name("multiFilePostReader")
                 .resources(xmlFiles)
                 .delegate(buildDelegate())
                 .build()
