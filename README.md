@@ -1,5 +1,5 @@
 # egloos-migration
-egloos 블로그 마이그리에션 프로그램
+egloos 블로그 마이그레이션 프로그램
 
 ##  사용 API
 ### Egloos API
