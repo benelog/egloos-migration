@@ -10,10 +10,6 @@ group = 'net.benelog.blog'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-ext {
-	JUNIT_VERSION = '5.4.1'
-}
-
 repositories {
 	mavenCentral()
 }
@@ -21,6 +17,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework:spring-oxm'
+	implementation 'org.springframework:spring-web'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 	implementation 'com.h2database:h2:1.4.197'
@@ -30,9 +27,9 @@ dependencies {
 	testImplementation ('org.springframework.batch:spring-batch-test') {
 		exclude module: 'junit'
 	}
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:${JUNIT_VERSION}'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:${JUNIT_VERSION}'
-
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
+	testImplementation 'org.junit.platform:junit-platform-commons:1.4.1'
 }
 
 compileKotlin {

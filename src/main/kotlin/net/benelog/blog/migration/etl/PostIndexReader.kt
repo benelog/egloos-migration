@@ -15,9 +15,8 @@ class PostIndexReader(val blogDomain: String) : PagingItemReader<PostIndex>(), I
     var context: ExecutionContext = ExecutionContext()
     val urlReader = mutableListOf<ItemStream>()
 
-    companion object {
-        val log = LoggerFactory.getLogger(this::class.java)
-    }
+    private val log = LoggerFactory.getLogger(this::class.java)
+
 
     override fun update(context: ExecutionContext) {}
 

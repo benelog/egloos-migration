@@ -9,13 +9,11 @@ import java.io.File
 import javax.annotation.PostConstruct
 
 class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
-    companion object {
-        val log = LoggerFactory.getLogger(this::class.java)
-    }
+    private val log = LoggerFactory.getLogger(this::class.java)
 
-    override fun write(items: MutableList<out Resource>) {
+    override fun write(items: List<out Resource>) {
         for(source in items) {
-            val destFile = FileSystemResource(destDir + "/" + source.filename)
+            val destFile = FileSystemResource("$destDir/$source.filename")
             copy(source, destFile)
         }
     }
@@ -26,7 +24,7 @@ class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
                 input.copyTo(output)
             }
         }
-        log.info("copy ${source} to ${destination}")
+        log.info("copy {} to {}", source, destination)
     }
 
     @PostConstruct

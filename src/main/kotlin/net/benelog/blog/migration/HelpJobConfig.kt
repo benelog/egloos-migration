@@ -30,7 +30,7 @@ class HelpJobConfig(
     @Bean
     fun printStep(): Step {
         return stepFactory.get("printStep")
-                .tasklet({ cont, context ->
+                .tasklet({ cont, _ ->
                     println()
                     println("## 안내")
                     println("실행하려는 Job은 `-Dspring.batch.job.names=help`와 같이 VM option으로 지정한다")
