@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlRootElement(name = "post")
 @XmlAccessorType(XmlAccessType.FIELD)
-class Post () {
+class EgloosPost () {
         @field:XmlElement(name = "post_no")
         var no:Int = 0
 

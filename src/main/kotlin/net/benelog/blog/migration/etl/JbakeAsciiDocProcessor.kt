@@ -1,6 +1,6 @@
 package net.benelog.blog.migration.etl
 
-import net.benelog.blog.migration.item.Post
+import net.benelog.blog.migration.item.EgloosPost
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.core.io.InputStreamResource
 import org.springframework.core.io.Resource
@@ -8,18 +8,19 @@ import java.time.format.DateTimeFormatter
 
 class JbakeAsciiDocProcessor(
         val converter: HtmlToAsciiDocConverter = HtmlToAsciiDocConverter()
-) : ItemProcessor<Post, Resource> {
+) : ItemProcessor<EgloosPost, Resource> {
 
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
-    override fun process(post: Post): Resource {
+    override fun process(post: EgloosPost): Resource {
         val content = convert(post)
+
         return object : InputStreamResource(content.byteInputStream()) {
             override fun getFilename() = "${post.no}.adoc"
         }
     }
 
-    private fun convert(post: Post): String {
+    private fun convert(post: EgloosPost): String {
         val asciiDoc = converter.convert(post.content)
         return """= ${post.title}
 ${post.nick}

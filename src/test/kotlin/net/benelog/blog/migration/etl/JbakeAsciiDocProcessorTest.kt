@@ -1,6 +1,6 @@
 package net.benelog.blog.migration.etl
 
-import net.benelog.blog.migration.item.Post
+import net.benelog.blog.migration.item.EgloosPost
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -10,7 +10,7 @@ class JbakeAsciiDocProcessorTest {
 
     @Test
     fun `AsciiDoc형식으로 변환된다`() {
-       val post = Post().apply {
+       val post = EgloosPost().apply {
            no = 2323
            title = "테스트 포스팅"
            tags = "테스트, Jbake, Asciidoc"

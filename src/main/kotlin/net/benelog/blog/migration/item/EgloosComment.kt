@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter
 
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.FIELD)
-class Comment() {
+class EgloosComment() {
     @field:XmlElement(name = "comment_no")
     lateinit var no: String
 

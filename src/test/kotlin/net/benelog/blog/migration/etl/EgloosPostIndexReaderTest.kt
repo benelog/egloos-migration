@@ -4,7 +4,7 @@ import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 
-class PostIndexReaderTest {
+class EgloosPostIndexReaderTest {
     @Test
     fun `XML 파싱이 잘 된다`() {
         val resource = ClassPathResource("post.xml")

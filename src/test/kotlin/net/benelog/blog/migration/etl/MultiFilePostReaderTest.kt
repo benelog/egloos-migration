@@ -1,6 +1,5 @@
 package net.benelog.blog.migration.etl
 
-import net.benelog.blog.migration.ConvertToAsciidocJobConfig
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.batch.item.ExecutionContext
@@ -19,7 +18,7 @@ class MultiFilePostReaderTest {
                 ClassPathResource("detail/3134907.xml")
         )
 
-        val reader = MultiFilePostReaderBuilder().multiFilePostReader(xmlFiles)
+        val reader = MultiFilePostReaderBuilder.build(xmlFiles)
 
         reader.open(ExecutionContext())
 

@@ -1,6 +1,6 @@
 package net.benelog.blog.migration.etl
 
-import net.benelog.blog.migration.item.Comment
+import net.benelog.blog.migration.item.EgloosComment
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.batch.item.ExecutionContext
@@ -11,7 +11,7 @@ import org.springframework.core.io.Resource
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
 import java.time.format.DateTimeFormatter
 
-class CommentParseTest {
+class EgloosCommentParseTest {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
     @Test
@@ -25,15 +25,17 @@ class CommentParseTest {
             assertThat(nick).isEqualTo("만숙이바보")
             assertThat(createdAt.format(formatter)).isEqualTo("2013-01-31 19:25:23")
             assertThat(writerThumbnail).isEqualTo("http://md.egloos.com/img/eg/profile_anonymous.jpg")
+            assertThat(writerHomepage).isEqualTo("")
         }
+        reader.close()
     }
 
-    private fun buildReader(xmlFile: Resource): StaxEventItemReader<Comment> {
-        return StaxEventItemReaderBuilder<Comment>()
+    private fun buildReader(xmlFile: Resource): StaxEventItemReader<EgloosComment> {
+        return StaxEventItemReaderBuilder<EgloosComment>()
                 .name("commentReader")
                 .resource(xmlFile)
                 .unmarshaller(Jaxb2Marshaller().apply {
-                    setClassesToBeBound(Comment::class.java)
+                    setClassesToBeBound(EgloosComment::class.java)
                 })
                 .addFragmentRootElements(listOf("item"))
                 .build().apply {
