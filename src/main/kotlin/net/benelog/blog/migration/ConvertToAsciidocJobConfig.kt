@@ -4,7 +4,6 @@ import net.benelog.blog.migration.etl.*
 import net.benelog.blog.migration.item.EgloosPost
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
-import org.springframework.batch.core.configuration.annotation.JobScope
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.core.launch.support.RunIdIncrementer
 import org.springframework.batch.core.step.tasklet.TaskletStep
@@ -34,7 +33,6 @@ class ConvertToAsciidocJobConfig(
     }
 
     @Bean
-    @JobScope
     fun convertToAsciiDocStep(): TaskletStep {
         val resourceResolver = PathMatchingResourcePatternResolver()
         val xmlFiles = resourceResolver.getResources("file:${downloadLocation}*.xml")
