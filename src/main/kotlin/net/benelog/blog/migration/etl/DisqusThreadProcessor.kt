@@ -73,7 +73,7 @@ class DisqusThreadProcessor(
         return egloosComments.map {
             DisqusThread.DisqusComment().apply {
                 id = it.no
-                author = it.nick
+                author = if (it.nick.isNotBlank()) it.nick else "Guest"
                 commentDate = DateTimes.fromSeoulToUtc(it.createdAt)
                 content = it.content
                 authorEmail = emailMapping.get(it.writer)
