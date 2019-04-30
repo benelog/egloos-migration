@@ -30,14 +30,14 @@ class HelpJobConfig(
     @Bean
     fun printStep(): Step {
         return stepFactory.get("printStep")
-                .tasklet({ cont, _ ->
+                .tasklet { _, _ ->
                     println()
                     println("## 안내")
                     println("실행하려는 Job은 `-Dspring.batch.job.names=help`와 같이 VM option으로 지정한다")
                     println("다운로드 위치 : ${downloadLocation}")
                     println()
                     RepeatStatus.FINISHED
-                })
+                }
                 .build()
     }
 }

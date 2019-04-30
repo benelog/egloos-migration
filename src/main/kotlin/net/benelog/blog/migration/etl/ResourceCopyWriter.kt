@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct
 class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    override fun write(items: List<out Resource>) {
+    override fun write(items: List<Resource>) {
         for(source in items) {
             val destFile = FileSystemResource("$destDir/$source.filename")
             copy(source, destFile)
