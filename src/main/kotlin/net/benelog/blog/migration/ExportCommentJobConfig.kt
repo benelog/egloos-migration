@@ -32,7 +32,7 @@ class ExportCommentJobConfig(
 
     @Bean
     fun exportCommentJob(): Job {
-        return jobFactory.get("exportCommentJob")
+        return jobFactory.get("exportComment")
                 .incrementer(RunIdIncrementer())
                 .start(exportCommentStep("", ""))
                 .build()

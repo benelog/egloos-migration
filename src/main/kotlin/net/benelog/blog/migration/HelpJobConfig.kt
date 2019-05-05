@@ -31,13 +31,16 @@ class HelpJobConfig(
     fun printStep(): Step {
         return stepFactory.get("printStep")
                 .tasklet { _, _ ->
-                    println()
-                    println("## 안내")
-                    println("실행하려는 Job은 `-Dspring.batch.job.names=help`와 같이 VM option으로 지정한다")
+                    println(message)
                     println("다운로드 위치 : ${downloadLocation}")
-                    println()
                     RepeatStatus.FINISHED
                 }
                 .build()
     }
+
+    private val message = """
+        ## 안내
+        실행할 작업은 `-Dspring.batch.job.names=help`와 같이 VM option으로 지정한다"
+        자세한 사용법은 https://github.com/benelog/egloos-migration 을 참조한다
+    """.trimIndent()
 }
