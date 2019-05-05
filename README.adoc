@@ -133,7 +133,7 @@ https://jsoup.org/[jsoup]을 이용하면 HTML을 파싱해서 이미지를 다�
 [source,kotlin]
 ----
 
-Document doc = Jsoup.parseBodyFragment(originalHtml);
+Document doc = Jsoup.parseBodyFragment(originalHtml)
 for (image in doc.getElementsByTag("img")) {
     val src = image.attr("src")
     if (src.contains("egloos.net")) {
@@ -163,7 +163,7 @@ https://blog.benelog.net 에서 참조하는 이미지 파일은 Dropbox, Github
 
 이에 따라 더 안정되고 성능이 좋으며 Guest Comment로도 댓글을 옮길 수 있는 XML import 방식을 선택했습니다.
 
-=== Kotlin 문자열의 `.trimIndent()` 의 한계
+=== Kotlin 문자열의 `.trimIndent()`
 `String.byteInputStream()` 을 호출하는 경우, 문자열에 `.trimIndent()`가 제대로 적용되지 않습니다.
 
 아래과 같이 문자열을 `org.springframework.core.io.Resource` 안에 바로 넣어서 전달하려고 할때 이런 현상을 발견했습니다.
@@ -182,7 +182,7 @@ https://blog.benelog.net 에서 참조하는 이미지 파일은 Dropbox, Github
 Kotlin의 `.trimIndent()`은 문자열 내부의 Byte 배열까지는 건드리지 않는 Extension으로 작동하기 때문에 그런 것으로 추정됩니다.
 
 이에 따라 https://github.com/benelog/egloos-migration/blob/master/src/main/kotlin/net/benelog/blog/migration/etl/JbakeAsciiDocProcessor.kt[JbakeAsciiDocProcessor.kt] 에서는
-아래와 같이 문자열 내부에서 들여쓰기를 하지 못했습니다.
+아래와 같이 문자열 내부에서 들여쓰기를 하지 않고 `trimIndent()` 도 쓰지 않았습니다.
 
 
 [source,kotlin]
@@ -206,7 +206,3 @@ $asciiDoc
     }
 }
 ----
-
-
-
-
