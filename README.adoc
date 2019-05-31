@@ -1,4 +1,4 @@
-:version: 1.0.1
+:version: 1.0.2
 
 = egloos-migration
 [Egloos](http://www.egloos.com/) 블로그 마이그리에션 프로그램. 아래 기능을 제공합니다.
