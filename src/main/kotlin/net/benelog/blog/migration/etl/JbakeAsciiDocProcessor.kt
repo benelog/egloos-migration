@@ -28,9 +28,6 @@ ${post.createdAt.format(formatter)}
 :jbake-type: post
 :jbake-status: published
 :jbake-tags: ${post.tags}
-:jabke-rootpath: /
-:rootpath: /
-:content.rootpath: /
 :idprefix:
 
 $asciiDoc
