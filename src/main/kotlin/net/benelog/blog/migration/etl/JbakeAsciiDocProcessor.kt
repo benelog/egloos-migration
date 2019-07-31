@@ -22,16 +22,15 @@ class JbakeAsciiDocProcessor(
 
     private fun convert(post: EgloosPost): String {
         val asciiDoc = converter.convert(post.content)
-        return """= ${post.title}
-${post.nick}
-${post.createdAt.format(formatter)}
-:jbake-type: post
-:jbake-status: published
-:jbake-tags: ${post.tags}
-:idprefix:
-
-$asciiDoc
-"""
-        // String을 inputStream으로 읽어서쓰니 trimIndent가 안 먹음.
+        return """
+            = ${post.title}
+            ${post.nick}
+            ${post.createdAt.format(formatter)}
+            :jbake-type: post
+            :jbake-status: published
+            :jbake-tags: ${post.tags}
+            :idprefix:
+        """.trimIndent() + asciiDoc
+        // asciiDoc 컨텐츠에는 indent가 없기 때문에 마지막에 더해줌.
     }
 }

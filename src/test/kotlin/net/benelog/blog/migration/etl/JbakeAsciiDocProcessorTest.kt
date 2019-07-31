@@ -14,9 +14,13 @@ class JbakeAsciiDocProcessorTest {
            no = 2323
            title = "테스트 포스팅"
            tags = "테스트, Jbake, Asciidoc"
-           content = "<h2>Hello</h2>"
            nick = "정상혁"
-           createdAt = LocalDateTime.of(2018, 3, 1, 0, 0);
+           createdAt = LocalDateTime.of(2018, 3, 1, 0, 0)
+           content =
+                   """
+                       <h2>Hello</h2>
+                       <div>Hello world!<div>
+                   """.trimIndent()
        }
 
         val adocFile = processor.process(post)
