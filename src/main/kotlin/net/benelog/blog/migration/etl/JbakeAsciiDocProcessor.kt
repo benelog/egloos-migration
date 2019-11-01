@@ -7,10 +7,10 @@ import org.springframework.core.io.Resource
 import java.time.format.DateTimeFormatter
 
 class JbakeAsciiDocProcessor(
-        val converter: HtmlToAsciiDocConverter = HtmlToAsciiDocConverter()
+        private val converter: HtmlToAsciiDocConverter = HtmlToAsciiDocConverter()
 ) : ItemProcessor<EgloosPost, Resource> {
 
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     override fun process(post: EgloosPost): Resource {
         val content = convert(post)
