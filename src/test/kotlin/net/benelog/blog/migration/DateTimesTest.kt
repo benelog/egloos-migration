@@ -1,9 +1,8 @@
 package net.benelog.blog.migration
 
+import java.time.LocalDateTime
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
-
-import java.time.LocalDateTime
 
 internal class DateTimesTest {
 

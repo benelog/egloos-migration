@@ -1,6 +1,5 @@
 package net.benelog.blog.migration.item
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.xml.bind.annotation.adapters.XmlAdapter

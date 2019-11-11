@@ -8,20 +8,19 @@ import org.slf4j.LoggerFactory
 import org.springframework.batch.item.ExecutionContext
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.batch.item.ItemStreamReader
-import org.springframework.batch.item.xml.StaxEventItemReader
 import org.springframework.batch.item.xml.builder.StaxEventItemReaderBuilder
 import org.springframework.core.io.Resource
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
 
 class DisqusThreadProcessor(
-        val commentProvider: (Int) -> Resource,
-        val targetParentUrl: String
+    val commentProvider: (Int) -> Resource,
+    val targetParentUrl: String
 ) : ItemProcessor<EgloosPost, DisqusThread> {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
     private val emailMapping = mapOf(
-            "benelog" to "benelog@gmail.com"
+        "benelog" to "benelog@gmail.com"
     )
 
     override fun process(item: EgloosPost): DisqusThread? {
@@ -46,7 +45,7 @@ class DisqusThreadProcessor(
         val commentReader = buildReader(apiResource)
         commentReader.open(ExecutionContext())
 
-        val comments = mutableListOf<EgloosComment>();
+        val comments = mutableListOf<EgloosComment>()
         while (true) {
             val comment = commentReader.read() ?: break
             comments.add(comment)
@@ -58,15 +57,15 @@ class DisqusThreadProcessor(
 
     private fun buildReader(input: Resource): ItemStreamReader<EgloosComment> {
         return StaxEventItemReaderBuilder<EgloosComment>()
-                .name("commentReader")
-                .resource(input)
-                .unmarshaller(Jaxb2Marshaller().apply {
-                    setClassesToBeBound(EgloosComment::class.java)
-                })
-                .addFragmentRootElements(listOf("item"))
-                .build().apply {
-                    afterPropertiesSet()
-                }
+            .name("commentReader")
+            .resource(input)
+            .unmarshaller(Jaxb2Marshaller().apply {
+                setClassesToBeBound(EgloosComment::class.java)
+            })
+            .addFragmentRootElements(listOf("item"))
+            .build().apply {
+                afterPropertiesSet()
+            }
     }
 
     private fun toDisqusComment(egloosComments: List<EgloosComment>): List<DisqusThread.DisqusComment> {

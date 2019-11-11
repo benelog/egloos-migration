@@ -15,33 +15,33 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.Resource
 
-
 @Configuration
 class DownloadJobConfig(
-        private val stepFactory: StepBuilderFactory,
-        private val jobFactory: JobBuilderFactory,
-        @Value("\${downloadLocation}")
-        private val downloadLocation: String
+    private val stepFactory: StepBuilderFactory,
+    private val jobFactory: JobBuilderFactory,
+    @Value("\${downloadLocation}")
+    private val downloadLocation: String
 ) {
 
     @Bean
     fun downloadJob(): Job {
         return jobFactory.get("download")
-                .incrementer(RunIdIncrementer())
-                .start(downloadStep(""))
-                .build()
+            .incrementer(RunIdIncrementer())
+            .start(downloadStep(""))
+            .build()
     }
 
     @Bean
     @JobScope
     fun downloadStep(
-            @Value("#{jobParameters[egloosAccount]}")
-            egloosAccount : String): TaskletStep {
+        @Value("#{jobParameters[egloosAccount]}")
+        egloosAccount: String
+    ): TaskletStep {
         return stepFactory.get("downloadStep")
-                .chunk<EgloosPostIndex, Resource>(1)
-                .reader(PostIndexReader(egloosAccount).apply{initReader()})
-                .processor(PostIndexToResourceProcessor(egloosAccount))
-                .writer(ResourceCopyWriter(downloadLocation).apply{initDirectory()})
-                .build()
+            .chunk<EgloosPostIndex, Resource>(1)
+            .reader(PostIndexReader(egloosAccount).apply { initReader() })
+            .processor(PostIndexToResourceProcessor(egloosAccount))
+            .writer(ResourceCopyWriter(downloadLocation).apply { initDirectory() })
+            .build()
     }
 }

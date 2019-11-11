@@ -9,17 +9,17 @@ class EgloosPostIndexReaderTest {
     fun `XML 파싱이 잘 된다`() {
         val resource = ClassPathResource("post.xml")
         val reader = PostIndexReader("benelog").buildItemReader(resource)
-        var count = 0;
+        var count = 0
         while (true) {
-            val item = reader.read();
+            val item = reader.read()
             if (item == null) {
                 break
-            };
+            }
             assertThat(item.postNo).isNotEqualTo(0)
             println(item.postNo)
-            count ++;
+            count++
         }
-        assertThat(count).isEqualTo(10);
+        assertThat(count).isEqualTo(10)
     }
 
     @Test
@@ -28,10 +28,10 @@ class EgloosPostIndexReaderTest {
         reader.initReader()
 
         while (true) {
-            val item = reader.read();
+            val item = reader.read()
             if (item == null) {
                 break
-            };
+            }
             assertThat(item.postNo).isNotEqualTo(0)
             println(item.postNo)
         }

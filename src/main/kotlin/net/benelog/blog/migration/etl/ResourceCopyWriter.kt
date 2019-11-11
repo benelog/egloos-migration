@@ -1,18 +1,18 @@
 package net.benelog.blog.migration.etl
 
+import java.io.File
+import javax.annotation.PostConstruct
 import org.slf4j.LoggerFactory
 import org.springframework.batch.item.ItemWriter
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
 import org.springframework.core.io.WritableResource
-import java.io.File
-import javax.annotation.PostConstruct
 
-class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
+class ResourceCopyWriter(val destDir: String) : ItemWriter<Resource> {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     override fun write(items: List<Resource>) {
-        for(source in items) {
+        for (source in items) {
             val destFile = FileSystemResource("$destDir/$source.filename")
             copy(source, destFile)
         }
@@ -30,9 +30,9 @@ class ResourceCopyWriter(val destDir:String) : ItemWriter<Resource> {
     @PostConstruct
     public fun initDirectory() {
         val dir = File(destDir)
-        if(dir.exists() && dir.isDirectory) {
+        if (dir.exists() && dir.isDirectory) {
             return
         }
-        dir.mkdirs();
+        dir.mkdirs()
     }
 }

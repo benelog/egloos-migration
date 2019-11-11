@@ -1,21 +1,21 @@
 package net.benelog.blog.migration.etl
 
+import java.time.LocalDateTime
 import net.benelog.blog.migration.item.EgloosPost
 import org.junit.jupiter.api.Test
 import org.springframework.batch.item.ExecutionContext
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.FileSystemResource
-import java.time.LocalDateTime
 
 class DisqusThreadProcessorTest {
 
     @Test
     fun processAndWrite() {
         val processor = DisqusThreadProcessor(
-                {
-                    ClassPathResource("/comment_$it.xml")
-                },
-                "https://blog2.benelog.net"
+            {
+                ClassPathResource("/comment_$it.xml")
+            },
+            "https://blog2.benelog.net"
         )
 
         val post = EgloosPost().apply {

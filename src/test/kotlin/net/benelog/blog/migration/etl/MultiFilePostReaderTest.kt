@@ -1,11 +1,11 @@
 package net.benelog.blog.migration.etl
 
+import java.time.format.DateTimeFormatter
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.batch.item.ExecutionContext
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
-import java.time.format.DateTimeFormatter
 
 class MultiFilePostReaderTest {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -13,9 +13,9 @@ class MultiFilePostReaderTest {
     @Test
     fun `여러 파일이 파싱이 된다`() {
 
-        val xmlFiles : Array<Resource> = arrayOf(
-                ClassPathResource("detail/2999108.xml"),
-                ClassPathResource("detail/3134907.xml")
+        val xmlFiles: Array<Resource> = arrayOf(
+            ClassPathResource("detail/2999108.xml"),
+            ClassPathResource("detail/3134907.xml")
         )
 
         val reader = MultiFilePostReaderBuilder.build(xmlFiles)

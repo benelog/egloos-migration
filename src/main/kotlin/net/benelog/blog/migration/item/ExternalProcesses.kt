@@ -2,11 +2,11 @@ package net.benelog.blog.migration.item
 
 object ExternalProcesses {
 
-    fun execute(command: String, stdin: String):String {
+    fun execute(command: String, stdin: String): String {
         val commands = command.split(" ")
         ProcessBuilder(commands).run {
             redirectErrorStream(true)
-            return@run start();
+            return@run start()
         }.run {
             outputStream.apply {
                 write(stdin.toByteArray())
@@ -14,7 +14,7 @@ object ExternalProcesses {
             }
             waitFor()
             return inputStream.bufferedReader().use {
-                it.readText();
+                it.readText()
             }
         }
     }

@@ -9,7 +9,7 @@ class EgloosCommentResourceProvider(val egloosAccount: String) : (Int) -> Resour
 
     override fun invoke(postNo: Int): Resource {
         val apiUrl = "http://api.egloos.com/$egloosAccount/post/$postNo/comment.xml"
-        log.info("API call to : {}" , apiUrl)
+        log.info("API call to : {}", apiUrl)
         return UrlResource(apiUrl)
     }
 }

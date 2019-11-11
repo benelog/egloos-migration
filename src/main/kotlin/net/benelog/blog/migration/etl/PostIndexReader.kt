@@ -11,12 +11,11 @@ import org.springframework.core.io.UrlResource
 import org.springframework.oxm.jaxb.Jaxb2Marshaller
 
 class PostIndexReader(val egloosAccount: String) : PagingItemReader<EgloosPostIndex>(), ItemStream {
-    var page = 0;
+    var page = 0
     var context: ExecutionContext = ExecutionContext()
     val urlReader = mutableListOf<ItemStream>()
 
     private val log = LoggerFactory.getLogger(this::class.java)
-
 
     override fun update(context: ExecutionContext) {}
 
@@ -26,30 +25,30 @@ class PostIndexReader(val egloosAccount: String) : PagingItemReader<EgloosPostIn
 
     override fun close() {
         urlReader.forEach { it.close() }
-        urlReader.clear();
+        urlReader.clear()
 
-        page = 0;
+        page = 0
     }
 
     override fun nextItemReader(): ItemReader<EgloosPostIndex> {
-        page++;
-        val url = "http://api.egloos.com/$egloosAccount/post.xml?page=$page";
-        log.info("API url : {}", url);
-        return buildItemReader(UrlResource(url));
+        page++
+        val url = "http://api.egloos.com/$egloosAccount/post.xml?page=$page"
+        log.info("API url : {}", url)
+        return buildItemReader(UrlResource(url))
     }
 
     fun buildItemReader(resource: Resource): ItemReader<EgloosPostIndex> {
         return StaxEventItemReaderBuilder<EgloosPostIndex>()
-                .resource(resource)
-                .name(resource.toString())
-                .unmarshaller(Jaxb2Marshaller().apply {
-                    setClassesToBeBound(EgloosPostIndex::class.java)
-                })
-                .addFragmentRootElements("item")
-                .build().apply {
-                    afterPropertiesSet()
-                    urlReader.add(this)
-                    open(context)
-                }
+            .resource(resource)
+            .name(resource.toString())
+            .unmarshaller(Jaxb2Marshaller().apply {
+                setClassesToBeBound(EgloosPostIndex::class.java)
+            })
+            .addFragmentRootElements("item")
+            .build().apply {
+                afterPropertiesSet()
+                urlReader.add(this)
+                open(context)
+            }
     }
 }

@@ -3,7 +3,6 @@ package net.benelog.blog.migration.etl
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 
-
 class HtmlToAsciidocConverterTest {
 
     @Test

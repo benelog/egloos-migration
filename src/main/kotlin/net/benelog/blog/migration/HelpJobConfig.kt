@@ -10,32 +10,31 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
 @Configuration
 class HelpJobConfig(
-        private val stepFactory: StepBuilderFactory,
-        private val jobFactory: JobBuilderFactory,
-        @Value("\${downloadLocation}")
-        private val downloadLocation: String
+    private val stepFactory: StepBuilderFactory,
+    private val jobFactory: JobBuilderFactory,
+    @Value("\${downloadLocation}")
+    private val downloadLocation: String
 ) {
 
     @Bean
     fun helpJob(): Job {
         return jobFactory.get("help")
-                .incrementer(RunIdIncrementer())
-                .start(printStep())
-                .build()
+            .incrementer(RunIdIncrementer())
+            .start(printStep())
+            .build()
     }
 
     @Bean
     fun printStep(): Step {
         return stepFactory.get("printStep")
-                .tasklet { _, _ ->
-                    println(message)
-                    println("다운로드 위치 : ${downloadLocation}")
-                    RepeatStatus.FINISHED
-                }
-                .build()
+            .tasklet { _, _ ->
+                println(message)
+                println("다운로드 위치 : $downloadLocation")
+                RepeatStatus.FINISHED
+            }
+            .build()
     }
 
     private val message = """

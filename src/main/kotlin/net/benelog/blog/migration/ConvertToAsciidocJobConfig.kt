@@ -1,6 +1,8 @@
 package net.benelog.blog.migration
 
-import net.benelog.blog.migration.etl.*
+import net.benelog.blog.migration.etl.JbakeAsciiDocProcessor
+import net.benelog.blog.migration.etl.MultiFilePostReaderBuilder
+import net.benelog.blog.migration.etl.ResourceCopyWriter
 import net.benelog.blog.migration.item.EgloosPost
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
@@ -15,34 +17,33 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver
 
 @Configuration
 class ConvertToAsciidocJobConfig(
-        private val stepFactory: StepBuilderFactory,
-        private val jobFactory: JobBuilderFactory,
+    private val stepFactory: StepBuilderFactory,
+    private val jobFactory: JobBuilderFactory,
 
-        @Value("\${downloadLocation}")
-        private val downloadLocation: String,
+    @Value("\${downloadLocation}")
+    private val downloadLocation: String,
 
-        @Value("\${outputLocation}")
-        private val outputLocation: String
+    @Value("\${outputLocation}")
+    private val outputLocation: String
 ) {
     @Bean
     fun convertToAsciiDocJob(): Job {
         return jobFactory.get("convertToAsciiDoc")
-                .incrementer(RunIdIncrementer())
-                .start(convertToAsciiDocStep())
-                .build()
+            .incrementer(RunIdIncrementer())
+            .start(convertToAsciiDocStep())
+            .build()
     }
 
     @Bean
     fun convertToAsciiDocStep(): TaskletStep {
         val resourceResolver = PathMatchingResourcePatternResolver()
-        val xmlFiles = resourceResolver.getResources("file:${downloadLocation}*.xml")
+        val xmlFiles = resourceResolver.getResources("file:$downloadLocation*.xml")
 
         return stepFactory.get("convertToAsciiDocStep")
-                .chunk<EgloosPost, Resource>(1)
-                .reader(MultiFilePostReaderBuilder.build(xmlFiles))
-                .processor(JbakeAsciiDocProcessor())
-                .writer(ResourceCopyWriter(outputLocation).apply { initDirectory() })
-                .build()
+            .chunk<EgloosPost, Resource>(1)
+            .reader(MultiFilePostReaderBuilder.build(xmlFiles))
+            .processor(JbakeAsciiDocProcessor())
+            .writer(ResourceCopyWriter(outputLocation).apply { initDirectory() })
+            .build()
     }
-
 }

@@ -1,17 +1,17 @@
 package net.benelog.blog.migration.etl
 
+import java.nio.file.Path
+import java.nio.file.Paths
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.UrlResource
-import java.nio.file.Path
-import java.nio.file.Paths
 
 class ResourceCopyWriterTest {
     @Test
     fun `URL로부터 복사`(@TempDir tempDir: Path) {
-        val downloadDir = tempDir.toFile().toString();
+        val downloadDir = tempDir.toFile().toString()
         val source = UrlResource("http://api.egloos.com/benelog/post/2999108.xml")
         val writer = ResourceCopyWriter(downloadDir)
 
@@ -23,7 +23,7 @@ class ResourceCopyWriterTest {
 
     @Test
     fun `String으로부터 복사`(@TempDir tempDir: Path) {
-        val downloadDir = tempDir.toFile().toString();
+        val downloadDir = tempDir.toFile().toString()
         val fileName = "test.txt"
         val content = "hello!"
         val source = object : ByteArrayResource(content.toByteArray(Charsets.UTF_8)) {

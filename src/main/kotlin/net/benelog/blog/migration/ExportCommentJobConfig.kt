@@ -1,5 +1,7 @@
 package net.benelog.blog.migration
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import net.benelog.blog.migration.etl.DisqusThreadProcessor
 import net.benelog.blog.migration.etl.DisqusThreadWriterBuilder
 import net.benelog.blog.migration.etl.EgloosCommentResourceProvider
@@ -17,15 +19,13 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Configuration
 class ExportCommentJobConfig(
-        private val stepFactory: StepBuilderFactory,
-        private val jobFactory: JobBuilderFactory,
-        @Value("\${downloadLocation}")
-        private val downloadLocation: String
+    private val stepFactory: StepBuilderFactory,
+    private val jobFactory: JobBuilderFactory,
+    @Value("\${downloadLocation}")
+    private val downloadLocation: String
 ) {
 
     private val formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
@@ -33,29 +33,31 @@ class ExportCommentJobConfig(
     @Bean
     fun exportCommentJob(): Job {
         return jobFactory.get("exportComment")
-                .incrementer(RunIdIncrementer())
-                .start(exportCommentStep("", ""))
-                .build()
+            .incrementer(RunIdIncrementer())
+            .start(exportCommentStep("", ""))
+            .build()
     }
 
     @Bean
     @JobScope
-    fun exportCommentStep(@Value("#{jobParameters[egloosAccount]}")
-                          egloosAccount: String,
-                          @Value("#{jobParameters[targetParentUrl]}")
-                          targetParentUrl: String): TaskletStep {
+    fun exportCommentStep(
+        @Value("#{jobParameters[egloosAccount]}")
+        egloosAccount: String,
+        @Value("#{jobParameters[targetParentUrl]}")
+        targetParentUrl: String
+    ): TaskletStep {
         val resourceResolver = PathMatchingResourcePatternResolver()
-        val egloosPostXmls = resourceResolver.getResources("file:${downloadLocation}*.xml")
+        val egloosPostXmls = resourceResolver.getResources("file:$downloadLocation*.xml")
         val timestamp = formatter.format(LocalDateTime.now())
 
         val commentProvider = EgloosCommentResourceProvider(egloosAccount)
         val disqusThreadXml = FileSystemResource("./disqusComments_$timestamp.xml")
 
         return stepFactory.get("exportCommentStep")
-                .chunk<EgloosPost, DisqusThread>(10)
-                .reader(MultiFilePostReaderBuilder.build(egloosPostXmls))
-                .processor(DisqusThreadProcessor(commentProvider, targetParentUrl))
-                .writer(DisqusThreadWriterBuilder.build(disqusThreadXml))
-                .build()
+            .chunk<EgloosPost, DisqusThread>(10)
+            .reader(MultiFilePostReaderBuilder.build(egloosPostXmls))
+            .processor(DisqusThreadProcessor(commentProvider, targetParentUrl))
+            .writer(DisqusThreadWriterBuilder.build(disqusThreadXml))
+            .build()
     }
 }

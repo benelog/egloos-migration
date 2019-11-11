@@ -1,13 +1,13 @@
 package net.benelog.blog.migration.etl
 
+import java.time.format.DateTimeFormatter
 import net.benelog.blog.migration.item.EgloosPost
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.core.io.InputStreamResource
 import org.springframework.core.io.Resource
-import java.time.format.DateTimeFormatter
 
 class JbakeAsciiDocProcessor(
-        private val converter: HtmlToAsciiDocConverter = HtmlToAsciiDocConverter()
+    private val converter: HtmlToAsciiDocConverter = HtmlToAsciiDocConverter()
 ) : ItemProcessor<EgloosPost, Resource> {
 
     private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
